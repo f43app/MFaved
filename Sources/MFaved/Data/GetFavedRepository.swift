@@ -39,6 +39,9 @@ Transformer.Domain == [FavedDomainModel] {
         public func put(id: Int) -> AnyPublisher<[FavedDomainModel], Error> {
             fatalError()
         }
+        public func noted(id: Int) -> AnyPublisher<Noted, Error> {
+            fatalError()
+        }
         public func check(id: Int) -> AnyPublisher<Bool, Error> {
             fatalError()
         }

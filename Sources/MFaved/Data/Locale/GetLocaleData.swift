@@ -55,7 +55,23 @@ public struct GetLocaleData: LocaleData {
            }
        }.eraseToAnyPublisher()
    }
-
+    
+   public func noted(id: Int) -> AnyPublisher<Noted, Error> {
+        return Future<Noted, Error> { completion in
+            do {
+                try _realm.write {
+                    let ffd = _realm.object(ofType: FavedModuleEntity.self, forPrimaryKey: id)
+                    let theTime = ffd?.tstamp ?? 0.0
+                    let theNote = ffd?.note ?? ""
+                    let ret = Noted.init(tstamp: theTime, note: theNote)
+                    completion(.success(ret))
+                }
+            } catch {
+                completion(.failure(DatabaseError.requestFailed))
+            }
+        }.eraseToAnyPublisher()
+   }
+    
    public func check(id: Int) -> AnyPublisher<Bool, Error> {
        return Future<Bool, Error> { completion in
            do {
